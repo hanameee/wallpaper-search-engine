@@ -9,7 +9,7 @@ const FooterContainer = styled.div`
 
 const Footer = () => {
     return (
-        <FooterContainer className="text-center text-gray-500 text-xs">
+        <FooterContainer>
             ©2022 Hanameee Corp. All rights reserved.
         </FooterContainer>
     );

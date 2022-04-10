@@ -29,7 +29,7 @@ const Pagination = () => {
         <Nav>
             <PrevIcon width="24" cursor="pointer" fill="var(--text)" />
             {`총 10 중 `}
-            <PageSelect name="page" value={1}>
+            <PageSelect name="page">
                 <option value={1} key={1}>
                     1
                 </option>
