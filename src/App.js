@@ -10,6 +10,7 @@ import './App.css';
 const Container = styled.div`
     position: relative;
     background-color: var(--primary);
+    min-height: 100vh;
 `;
 
 const defaultSearchOptions = {
@@ -20,7 +21,10 @@ const defaultSearchOptions = {
 };
 
 function App() {
-    const [theme, setTheme] = useState('light');
+    const savedUserTheme = localStorage.getItem('data-theme');
+    const [theme, setTheme] = useState(
+        savedUserTheme ? savedUserTheme : 'light'
+    );
     const [data, setData] = useState([]);
     const [query, setQuery] = useState('');
     const [searchOptions, setSearchOptions] = useState(defaultSearchOptions);
