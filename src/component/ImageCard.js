@@ -7,6 +7,7 @@ const Card = styled.div`
     flex-shrink: 1;
     flex-basis: 300px;
     padding: 8px;
+    cursor: pointer;
 `;
 
 const Img = styled.img`
