@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import EmptyResult from './EmptyResult';
 import ImageCard from './ImageCard';
 import ImageModal from './ImageModal';
 import Pagination from './Pagination';
@@ -44,20 +45,26 @@ const ResultContainer = ({ data, searchOptions, setSearchOptions }) => {
                     setCurrentImageDetail={setCurrentImageDetail}
                 />
             )}
-            <Pagination
-                total={data.totalHits}
-                per_page={per_page}
-                page={page}
-                setSearchOptions={setSearchOptions}
-            />
+            {data.hits?.length > 0 && (
+                <Pagination
+                    total={data.totalHits}
+                    per_page={per_page}
+                    page={page}
+                    setSearchOptions={setSearchOptions}
+                />
+            )}
             <ResultsWrapper>
-                {data.hits?.map((imgData) => (
-                    <ImageCard
-                        key={imgData.id}
-                        imgData={imgData}
-                        onClick={() => openImageDetail(imgData)}
-                    />
-                ))}
+                {data.hits?.length ? (
+                    data.hits?.map((imgData) => (
+                        <ImageCard
+                            key={imgData.id}
+                            imgData={imgData}
+                            onClick={() => openImageDetail(imgData)}
+                        />
+                    ))
+                ) : (
+                    <EmptyResult />
+                )}
             </ResultsWrapper>
         </Container>
     );
