@@ -10,7 +10,7 @@ const Tag = styled.div`
     background-color: var(--highlight);
     cursor: pointer;
     &:hover {
-        background-color: var(--highlight-overlay);
+        background-color: var(--overlay);
     }
     margin: 4px;
 `;

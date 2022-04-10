@@ -16,7 +16,7 @@ const Button = styled.div`
     justify-content: center;
     cursor: pointer;
     &:hover {
-        background-color: var(--highlight-overlay);
+        background-color: var(--overlay);
         transform: translateY(-2px);
         transition: ease 1s;
     }
