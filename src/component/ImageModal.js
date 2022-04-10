@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { ReactComponent as DeleteIcon } from '../asset/delete.svg';
 
 import { ReactComponent as LikeIcon } from '../asset/like.svg';

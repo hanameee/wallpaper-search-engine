@@ -119,7 +119,7 @@ const Search = ({ updateQuery, searchOptions, setSearchOptions }) => {
                     <SearchInput
                         ref={inputRef}
                         onKeyDown={onSearch}
-                        placeholder="검색어 입력 후 엔터를 눌러주세요."
+                        placeholder="검색어 입력 후 ENTER"
                     />
                     <SearchOptionLabel onClick={toggleSearchOption}>
                         검색 옵션 {searchOption ? '닫기' : '열기'}
