@@ -20,8 +20,9 @@ const ResultsWrapper = styled.div`
     width: 100%;
 `;
 
-const ResultContainer = ({ data, page, setPage, numOfPages }) => {
+const ResultContainer = ({ data, setIsLoading }) => {
     const [currentImageDetail, setCurrentImageDetail] = useState(null);
+    const totalDataLength = data.hits?.length;
     return (
         <Container>
             {/* ImgCard 클릭 시 해당 이미지의 정보로 ImageModal이 나타나야 합니다. */}
@@ -40,15 +41,17 @@ const ResultContainer = ({ data, page, setPage, numOfPages }) => {
             )} */}
             <ResultsWrapper>
                 {data.hits?.length > 0 ? (
-                    data.hits?.map((imgData) => (
+                    data.hits?.map((imgData, idx) => (
                         <ImageCard
                             key={imgData.id}
                             imgData={imgData}
                             onClick={() => setCurrentImageDetail(imgData)}
+                            setIsLoading={setIsLoading}
+                            isLastItem={totalDataLength - 1 === idx}
                         />
                     ))
                 ) : (
-                    <EmptyResult />
+                    <EmptyResult isLoading={false} />
                 )}
             </ResultsWrapper>
         </Container>

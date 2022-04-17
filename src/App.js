@@ -4,6 +4,7 @@ import ToggleThemeButton from './component/ToggleThemeButton';
 import Hero from './component/Hero';
 import ResultContainer from './component/ResultContainer';
 import Footer from './component/Footer';
+import EmptyResult from './component/EmptyResult';
 import getWallPapers from './api/getWallPapers';
 import './App.css';
 
@@ -13,17 +14,7 @@ const Container = styled.div`
     min-height: 100vh;
 `;
 
-const Loader = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    font-weight: bold;
-    font-size: 40px;
-    margin: 16px 0;
-`;
-
-const PER_PAGE = 10;
+const PER_PAGE = 20;
 
 function App() {
     const [data, setData] = useState({});
@@ -31,6 +22,7 @@ function App() {
     const [order, setOrder] = useState('popular');
     const [orientation, setOrientation] = useState('all');
     const [page, setPage] = useState(1);
+    const [isLoading, setIsLoading] = useState(false);
     const target = useRef(null);
 
     const numOfPages = data.totalHits
@@ -38,6 +30,7 @@ function App() {
         : 0;
 
     const fetch = useCallback(async () => {
+        console.info('FETCH!', page);
         const fetchedData = await getWallPapers({
             q: query,
             orientation: orientation,
@@ -47,20 +40,6 @@ function App() {
         return fetchedData;
     }, [order, orientation, page, query]);
 
-    const onIntersect = useCallback(
-        async ([entries], observer) => {
-            if (page === numOfPages) {
-                return;
-            }
-            if (data.hits?.length > 0 && entries.isIntersecting) {
-                observer.unobserve(entries.target);
-                setPage((prev) => prev + 1);
-            }
-        },
-        [data]
-    );
-
-    // fetch initial data & fetch again when options change
     useEffect(() => {
         setPage(1);
     }, [order, orientation, query]);
@@ -77,17 +56,35 @@ function App() {
                 }));
             }
         };
+        setIsLoading(true);
         fetchData();
-    }, [page]);
+    }, [fetch, page]);
+
+    // page를 +1
+    const onIntersect = useCallback(
+        async ([entries], observer) => {
+            if (!isLoading) {
+                if (data.hits?.length > 0 && entries.isIntersecting) {
+                    observer.unobserve(entries.target);
+                    setPage((prev) => prev + 1);
+                }
+            }
+        },
+        [data, isLoading]
+    );
 
     // intersection observer 생성 및 등록
     useEffect(() => {
-        const observer = new IntersectionObserver(onIntersect, {});
+        if (page === numOfPages) {
+            return;
+        }
+        const observer = new IntersectionObserver(onIntersect, {
+            threshold: 0.5,
+        });
         observer.observe(target.current);
         return () => observer.disconnect();
-    }, [onIntersect, target]);
+    }, [isLoading, numOfPages, onIntersect, page]);
 
-    console.info(data);
     return (
         <>
             <Container>
@@ -101,10 +98,11 @@ function App() {
                     page={page}
                     setPage={setPage}
                     numOfPages={numOfPages}
+                    setIsLoading={setIsLoading}
                 />
                 <div ref={target}>
-                    {data.hits?.length > 0 && page !== numOfPages && (
-                        <Loader>로딩중...</Loader>
+                    {data.hits?.length && page !== numOfPages && isLoading && (
+                        <EmptyResult isLoading={true} />
                     )}
                 </div>
                 <Footer />

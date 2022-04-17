@@ -6,7 +6,6 @@ const BASE_URL = 'https://pixabay.com/api';
 const defaultParam = {
     key: process.env.REACT_APP_PIXABAY,
     safesearch: true,
-    per_page: 10,
 };
 
 const getWallPapers = async (paramObj) => {

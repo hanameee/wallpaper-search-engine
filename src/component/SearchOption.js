@@ -24,7 +24,7 @@ const SearchOptionLabel = styled.p`
     border-radius: 16px;
 `;
 
-const SearchOption = ({ setOrder, setOrientation, setPerPage }) => {
+const SearchOption = ({ setOrder, setOrientation }) => {
     return (
         <SearchOptionContainer>
             <SearchOptionUl>
@@ -76,36 +76,6 @@ const SearchOption = ({ setOrder, setOrientation, setPerPage }) => {
                             value="vertical"
                         />
                         <label htmlFor="vertical">세로</label>
-                    </form>
-                </SearchOptionLi>
-                <SearchOptionLi>
-                    <SearchOptionLabel>페이지 당 갯수</SearchOptionLabel>
-                    <form
-                        id="per_page"
-                        onChange={(e) => setPerPage(e.target.value)}
-                    >
-                        <input
-                            type="radio"
-                            name="per_page"
-                            id="10"
-                            value={10}
-                        />
-                        <label htmlFor="10">10</label>
-                        <input
-                            type="radio"
-                            name="per_page"
-                            id="20"
-                            value={20}
-                            defaultChecked={true}
-                        />
-                        <label htmlFor="20">20</label>
-                        <input
-                            type="radio"
-                            name="per_page"
-                            id="30"
-                            value={30}
-                        />
-                        <label htmlFor="30">30</label>
                     </form>
                 </SearchOptionLi>
             </SearchOptionUl>
