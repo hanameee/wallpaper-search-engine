@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useEffect, useState, useRef, useCallback } from 'react';
+import { useEffect, useState, useRef, useCallback, useMemo } from 'react';
 import ToggleThemeButton from './component/ToggleThemeButton';
 import Hero from './component/Hero';
 import ResultContainer from './component/ResultContainer';
@@ -31,33 +31,48 @@ function App() {
     const [order, setOrder] = useState('popular');
     const [orientation, setOrientation] = useState('all');
     const [page, setPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(null);
+    const isFetchingMoreImages = useRef(false);
+    const isLastPage = useMemo(() => {
+        return page === totalPages;
+    }, [page, totalPages]);
     const target = useRef(null);
 
-    const numOfPages = data.totalHits
-        ? Math.ceil(data.totalHits / PER_PAGE)
-        : 0;
-
-    const fetch = useCallback(async () => {
-        const fetchedData = await getWallPapers({
-            q: query,
-            orientation: orientation,
-            order: order,
-            page: page,
-        });
-        return fetchedData;
-    }, [order, orientation, page, query]);
+    useEffect(() => {
+        setTotalPages((totalPages) =>
+            totalPages ? data.totalHits : totalPages
+        );
+    }, [data]);
 
     const onIntersect = useCallback(
         async ([entries], observer) => {
-            if (page === numOfPages) {
+            console.log(isFetchingMoreImages.current);
+            if (isLastPage || isFetchingMoreImages.current) {
                 return;
             }
-            if (data.hits?.length > 0 && entries.isIntersecting) {
+            if (entries.isIntersecting) {
+                isFetchingMoreImages.current = true;
                 observer.unobserve(entries.target);
-                setPage((prev) => prev + 1);
+                console.log(page);
+                const fetchData = async () => {
+                    const fetchedData = await getWallPapers({
+                        q: query,
+                        orientation: orientation,
+                        order: order,
+                        page: page + 1,
+                    });
+                    setPage((page) => page + 1);
+                    setData((prev) => ({
+                        ...fetchedData,
+                        hits: prev.hits.concat(fetchedData.hits),
+                    }));
+                    observer.observe(entries.target);
+                    isFetchingMoreImages.current = false;
+                };
+                fetchData();
             }
         },
-        [data]
+        [isFetchingMoreImages, isLastPage, order, orientation, page, query]
     );
 
     // intersection observer 생성 및 등록
@@ -69,23 +84,21 @@ function App() {
 
     // fetch initial data & fetch again when options change
     useEffect(() => {
+        console.log('reset');
         setPage(1);
-    }, [order, orientation, query]);
-
-    useEffect(() => {
         const fetchData = async () => {
-            const fetchedData = await fetch();
-            if (page === 1) {
-                setData(fetchedData);
-            } else {
-                setData((prev) => ({
-                    ...fetchedData,
-                    hits: prev.hits.concat(fetchedData.hits),
-                }));
-            }
+            isFetchingMoreImages.current = true;
+            const fetchedData = await getWallPapers({
+                q: query,
+                orientation: orientation,
+                order: order,
+                page: 1,
+            });
+            isFetchingMoreImages.current = false;
+            setData(fetchedData);
         };
         fetchData();
-    }, [page]);
+    }, [order, orientation, query]);
 
     // 추가 fetch -> useEffect 면 무조건 1번
 
@@ -101,10 +114,10 @@ function App() {
                     data={data}
                     page={page}
                     setPage={setPage}
-                    numOfPages={numOfPages}
+                    numOfPages={totalPages}
                 />
                 <div ref={target}>
-                    {data.hits?.length > 0 && page !== numOfPages && (
+                    {data.hits?.length > 0 && !isLastPage && (
                         <Loader>로딩중...</Loader>
                     )}
                 </div>
