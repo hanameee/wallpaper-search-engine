@@ -24,18 +24,40 @@ const PageSelect = styled.select`
     }
 `;
 
-const Pagination = () => {
+const Pagination = ({ page, setPage, numOfPages }) => {
     return (
         <Nav>
-            <PrevIcon width="24" cursor="pointer" fill="var(--text)" />
-            {`총 10 중 `}
-            <PageSelect name="page">
-                <option value={1} key={1}>
-                    1
-                </option>
+            {page !== 1 && (
+                <PrevIcon
+                    width="24"
+                    cursor="pointer"
+                    fill="var(--text)"
+                    onClick={() => setPage((prev) => prev - 1)}
+                />
+            )}
+            {`총 ${numOfPages} 중 `}
+            <PageSelect
+                name="page"
+                value={page}
+                onChange={(e) => setPage(parseInt(e.target.value))}
+            >
+                {Array(numOfPages)
+                    .fill()
+                    .map((data, idx) => (
+                        <option value={idx + 1} key={idx + 1}>
+                            {idx + 1}
+                        </option>
+                    ))}
             </PageSelect>
             페이지
-            <NextIcon width="24" cursor="pointer" fill="var(--text)" />
+            {page !== numOfPages && (
+                <NextIcon
+                    width="24"
+                    cursor="pointer"
+                    fill="var(--text)"
+                    onClick={() => setPage((prev) => prev + 1)}
+                />
+            )}
         </Nav>
     );
 };
