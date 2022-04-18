@@ -1,17 +1,9 @@
-<<<<<<< HEAD
-import { useState, useRef, useEffect } from 'react';
-import styled from 'styled-components';
-import { ReactComponent as SearchIcon } from '../asset/search.svg';
-import SearchOption from './SearchOption';
-import SearchTag from './SearchTag';
-=======
 import { useState, useRef } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as SearchIcon } from '../asset/search.svg';
 import SearchTag from './SearchTag';
 import SearchOption from './SearchOption';
 import { useEffect } from 'react';
->>>>>>> main
 
 const SearchTagContainer = styled.div`
     display: flex;
@@ -28,11 +20,7 @@ const SearchBoxContainer = styled.div`
     width: 100%;
     align-items: center;
     border-radius: 8px;
-<<<<<<< HEAD
-    background-color: #fff;
-=======
     background-color: #ffffff;
->>>>>>> main
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
 `;
 
@@ -52,17 +40,6 @@ const SearchInput = styled.input`
     margin-left: 8px;
 `;
 
-<<<<<<< HEAD
-const SearchOptionContainer = styled.div`
-    display: flex;
-    width: 100%;
-    align-items: center;
-    justify-content: center;
-    border-radius: 8px;
-`;
-
-=======
->>>>>>> main
 const SearchOptionButton = styled.p`
     cursor: pointer;
     font-size: 14px;
@@ -70,16 +47,6 @@ const SearchOptionButton = styled.p`
     color: #5e5e5e;
 `;
 
-<<<<<<< HEAD
-const Search = ({ updateQuery, searchOptions, setSearchOptions }) => {
-    const savedSearchTags = localStorage.getItem('searchTags');
-    const [searchOption, setSearchOption] = useState(false);
-    const initialSearchTags = savedSearchTags
-        ? JSON.parse(savedSearchTags)
-        : [];
-    const [searchTags, setSearchTags] = useState(initialSearchTags);
-    const inputRef = useRef('');
-=======
 const Search = ({ setQuery, setOrder, setOrientation, setPerPage }) => {
     const savedSearchTags = localStorage.getItem('searchTags');
     const initialSearchTags = savedSearchTags
@@ -92,7 +59,6 @@ const Search = ({ setQuery, setOrder, setOrientation, setPerPage }) => {
     const updateSearchInput = (value) => {
         inputRef.current.value = value;
     };
->>>>>>> main
 
     const toggleSearchOption = () => {
         setSearchOption((prev) => !prev);
@@ -100,21 +66,6 @@ const Search = ({ setQuery, setOrder, setOrientation, setPerPage }) => {
 
     const onSearch = (e) => {
         if (e.key === 'Enter') {
-<<<<<<< HEAD
-            const currentInput = e.target.value;
-            updateQuery(currentInput);
-            setSearchTags((prev) => [...prev, currentInput]);
-            updateSearchInput('');
-        }
-    };
-
-    const updateSearchInput = (value) => {
-        inputRef.current.value = value;
-    };
-
-    const searchTag = (tag) => {
-        updateQuery(tag);
-=======
             const currentValue = e.target.value;
             setQuery(currentValue);
             updateSearchInput('');
@@ -124,7 +75,6 @@ const Search = ({ setQuery, setOrder, setOrientation, setPerPage }) => {
 
     const searchTag = (tag) => {
         setQuery(tag);
->>>>>>> main
         updateSearchInput(tag);
     };
 
@@ -145,13 +95,8 @@ const Search = ({ setQuery, setOrder, setOrientation, setPerPage }) => {
                     <SearchIcon width="24" fill="#5e5e5e" />
                     <SearchInput
                         ref={inputRef}
-<<<<<<< HEAD
-                        onKeyDown={onSearch}
-                        placeholder="검색어 입력 후 ENTER"
-=======
                         placeholder="검색어 입력 후 ENTER"
                         onKeyDown={onSearch}
->>>>>>> main
                     />
                     <SearchOptionButton onClick={toggleSearchOption}>
                         검색 옵션 {searchOption ? '닫기' : '열기'}
@@ -159,14 +104,9 @@ const Search = ({ setQuery, setOrder, setOrientation, setPerPage }) => {
                 </SearchInputContainer>
                 {searchOption && (
                     <SearchOption
-<<<<<<< HEAD
-                        searchOptions={searchOptions}
-                        setSearchOptions={setSearchOptions}
-=======
                         setOrder={setOrder}
                         setOrientation={setOrientation}
                         setPerPage={setPerPage}
->>>>>>> main
                     />
                 )}
             </SearchBoxContainer>
@@ -174,11 +114,7 @@ const Search = ({ setQuery, setOrder, setOrientation, setPerPage }) => {
                 {searchTags.map((tag, idx) => (
                     <SearchTag
                         key={tag + idx}
-<<<<<<< HEAD
-                        value={tag}
-=======
                         tag={tag}
->>>>>>> main
                         searchTag={() => searchTag(tag)}
                         deleteTag={() => deleteTag(idx)}
                     />

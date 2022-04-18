@@ -1,12 +1,3 @@
-<<<<<<< HEAD
-import { useEffect, useState } from 'react';
-import styled from 'styled-components';
-import getWallpapers from './api/getWallpapers';
-import ResultContainer from './component/ResultContainer';
-import Hero from './component/Hero';
-import Footer from './component/Footer';
-import ToggleThemeButton from './component/ToggleThemeButton';
-=======
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import ToggleThemeButton from './component/ToggleThemeButton';
@@ -14,7 +5,6 @@ import Hero from './component/Hero';
 import ResultContainer from './component/ResultContainer';
 import Footer from './component/Footer';
 import getWallPapers from './api/getWallPapers';
->>>>>>> main
 import './App.css';
 
 const Container = styled.div`
@@ -23,41 +13,6 @@ const Container = styled.div`
     min-height: 100vh;
 `;
 
-<<<<<<< HEAD
-const defaultSearchOptions = {
-    page: 1,
-    order: 'popular',
-    orientation: 'all',
-    per_page: 20,
-};
-
-function App() {
-    const savedUserTheme = localStorage.getItem('data-theme');
-    const [theme, setTheme] = useState(
-        savedUserTheme ? savedUserTheme : 'light'
-    );
-    const [data, setData] = useState([]);
-    const [query, setQuery] = useState('');
-    const [searchOptions, setSearchOptions] = useState(defaultSearchOptions);
-
-    const updateQuery = (value) => {
-        setQuery(value);
-        setSearchOptions(defaultSearchOptions);
-    };
-
-    useEffect(() => {
-        const fetch = async () => {
-            const data = await getWallpapers({
-                key: process.env.REACT_APP_PIXABAY,
-                q: query,
-                safesearch: true,
-                ...searchOptions,
-            });
-            data && setData(data);
-        };
-        fetch();
-    }, [query, searchOptions]);
-=======
 function App() {
     const [data, setData] = useState({});
     const [query, setQuery] = useState('');
@@ -81,25 +36,11 @@ function App() {
         };
         fetch();
     }, [query, orientation, order, page, perPage]);
->>>>>>> main
 
     return (
         <>
             <Container>
                 <Hero
-<<<<<<< HEAD
-                    updateQuery={updateQuery}
-                    searchOptions={searchOptions}
-                    setSearchOptions={setSearchOptions}
-                />
-                <ResultContainer
-                    data={data}
-                    searchOptions={searchOptions}
-                    setSearchOptions={setSearchOptions}
-                />
-                <Footer />
-                <ToggleThemeButton theme={theme} setTheme={setTheme} />
-=======
                     setQuery={setQuery}
                     setOrder={setOrder}
                     setOrientation={setOrientation}
@@ -113,7 +54,6 @@ function App() {
                 />
                 <Footer />
                 <ToggleThemeButton />
->>>>>>> main
             </Container>
         </>
     );

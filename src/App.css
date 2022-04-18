@@ -10,15 +10,6 @@ html {
     --text: black;
 }
 
-<<<<<<< HEAD
-html[data-theme='light'] {
-    --primary: #ffffff;
-    --secondary: aliceblue;
-    --text: black;
-}
-
-=======
->>>>>>> main
 html[data-theme='dark'] {
     --primary: #1e1f21;
     --secondary: #292a2d;
