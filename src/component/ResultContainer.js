@@ -1,9 +1,19 @@
+<<<<<<< HEAD
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import EmptyResult from './EmptyResult';
 import ImageCard from './ImageCard';
 import ImageModal from './ImageModal';
 import Pagination from './Pagination';
+=======
+import styled from 'styled-components';
+import { useState } from 'react';
+
+import ImageCard from './ImageCard';
+import ImageModal from './ImageModal';
+import Pagination from './Pagination';
+import EmptyResult from './EmptyResult';
+>>>>>>> main
 
 const Container = styled.div`
     max-width: 1830px;
@@ -19,6 +29,7 @@ const ResultsWrapper = styled.div`
     width: 100%;
 `;
 
+<<<<<<< HEAD
 const ResultContainer = ({ data, searchOptions, setSearchOptions }) => {
     const { page, per_page } = searchOptions;
     const [currentImageDetail, setCurrentImageDetail] = useState(null);
@@ -39,6 +50,13 @@ const ResultContainer = ({ data, searchOptions, setSearchOptions }) => {
 
     return (
         <Container>
+=======
+const ResultContainer = ({ data, page, setPage, numOfPages }) => {
+    const [currentImageDetail, setCurrentImageDetail] = useState(null);
+    return (
+        <Container>
+            {/* ImgCard 클릭 시 해당 이미지의 정보로 ImageModal이 나타나야 합니다. */}
+>>>>>>> main
             {currentImageDetail && (
                 <ImageModal
                     currentImageDetail={currentImageDetail}
@@ -47,6 +65,7 @@ const ResultContainer = ({ data, searchOptions, setSearchOptions }) => {
             )}
             {data.hits?.length > 0 && (
                 <Pagination
+<<<<<<< HEAD
                     total={data.totalHits}
                     per_page={per_page}
                     page={page}
@@ -55,11 +74,24 @@ const ResultContainer = ({ data, searchOptions, setSearchOptions }) => {
             )}
             <ResultsWrapper>
                 {data.hits?.length ? (
+=======
+                    page={page}
+                    setPage={setPage}
+                    numOfPages={numOfPages}
+                />
+            )}
+            <ResultsWrapper>
+                {data.hits?.length > 0 ? (
+>>>>>>> main
                     data.hits?.map((imgData) => (
                         <ImageCard
                             key={imgData.id}
                             imgData={imgData}
+<<<<<<< HEAD
                             onClick={() => openImageDetail(imgData)}
+=======
+                            onClick={() => setCurrentImageDetail(imgData)}
+>>>>>>> main
                         />
                     ))
                 ) : (

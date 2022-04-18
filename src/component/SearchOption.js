@@ -24,14 +24,19 @@ const SearchOptionLabel = styled.p`
     border-radius: 16px;
 `;
 
+<<<<<<< HEAD
 const SearchOption = ({ searchOptions, setSearchOptions }) => {
     const { order, orientation, per_page } = searchOptions;
 
+=======
+const SearchOption = ({ setOrder, setOrientation, setPerPage }) => {
+>>>>>>> main
     return (
         <SearchOptionContainer>
             <SearchOptionUl>
                 <SearchOptionLi>
                     <SearchOptionLabel>정렬</SearchOptionLabel>
+<<<<<<< HEAD
                     <form
                         id="order"
                         onChange={(e) =>
@@ -43,12 +48,18 @@ const SearchOption = ({ searchOptions, setSearchOptions }) => {
                             })
                         }
                     >
+=======
+                    <form id="order" onChange={(e) => setOrder(e.target.value)}>
+>>>>>>> main
                         <input
                             type="radio"
                             name="order"
                             id="latest"
                             value="latest"
+<<<<<<< HEAD
                             defaultChecked={order === 'latest'}
+=======
+>>>>>>> main
                         />
                         <label htmlFor="latest">최신순</label>
                         <input
@@ -56,7 +67,11 @@ const SearchOption = ({ searchOptions, setSearchOptions }) => {
                             name="order"
                             id="popular"
                             value="popular"
+<<<<<<< HEAD
                             defaultChecked={order === 'popular'}
+=======
+                            defaultChecked={true}
+>>>>>>> main
                         />
                         <label htmlFor="popular">인기순</label>
                     </form>
@@ -65,6 +80,7 @@ const SearchOption = ({ searchOptions, setSearchOptions }) => {
                     <SearchOptionLabel>사진 방향</SearchOptionLabel>
                     <form
                         id="orientation"
+<<<<<<< HEAD
                         onChange={(e) =>
                             setSearchOptions((prev) => {
                                 return {
@@ -73,13 +89,20 @@ const SearchOption = ({ searchOptions, setSearchOptions }) => {
                                 };
                             })
                         }
+=======
+                        onChange={(e) => setOrientation(e.target.value)}
+>>>>>>> main
                     >
                         <input
                             type="radio"
                             name="orientation"
                             id="all"
                             value="all"
+<<<<<<< HEAD
                             defaultChecked={orientation === 'all'}
+=======
+                            defaultChecked={true}
+>>>>>>> main
                         />
                         <label htmlFor="all">모두</label>
                         <input
@@ -87,7 +110,10 @@ const SearchOption = ({ searchOptions, setSearchOptions }) => {
                             name="orientation"
                             id="horizontal"
                             value="horizontal"
+<<<<<<< HEAD
                             defaultChecked={orientation === 'horizontal'}
+=======
+>>>>>>> main
                         />
                         <label htmlFor="horizontal">가로</label>
                         <input
@@ -95,7 +121,10 @@ const SearchOption = ({ searchOptions, setSearchOptions }) => {
                             name="orientation"
                             id="vertical"
                             value="vertical"
+<<<<<<< HEAD
                             defaultChecked={orientation === 'vertical'}
+=======
+>>>>>>> main
                         />
                         <label htmlFor="vertical">세로</label>
                     </form>
@@ -104,6 +133,7 @@ const SearchOption = ({ searchOptions, setSearchOptions }) => {
                     <SearchOptionLabel>페이지 당 갯수</SearchOptionLabel>
                     <form
                         id="per_page"
+<<<<<<< HEAD
                         onChange={(e) =>
                             setSearchOptions((prev) => {
                                 return {
@@ -112,13 +142,19 @@ const SearchOption = ({ searchOptions, setSearchOptions }) => {
                                 };
                             })
                         }
+=======
+                        onChange={(e) => setPerPage(e.target.value)}
+>>>>>>> main
                     >
                         <input
                             type="radio"
                             name="per_page"
                             id="10"
                             value={10}
+<<<<<<< HEAD
                             defaultChecked={per_page === 10}
+=======
+>>>>>>> main
                         />
                         <label htmlFor="10">10</label>
                         <input
@@ -126,7 +162,11 @@ const SearchOption = ({ searchOptions, setSearchOptions }) => {
                             name="per_page"
                             id="20"
                             value={20}
+<<<<<<< HEAD
                             defaultChecked={per_page === 20}
+=======
+                            defaultChecked={true}
+>>>>>>> main
                         />
                         <label htmlFor="20">20</label>
                         <input
@@ -134,9 +174,14 @@ const SearchOption = ({ searchOptions, setSearchOptions }) => {
                             name="per_page"
                             id="30"
                             value={30}
+<<<<<<< HEAD
                             defaultChecked={per_page === 30}
                         />
                         <label htmlFor="10">30</label>
+=======
+                        />
+                        <label htmlFor="30">30</label>
+>>>>>>> main
                     </form>
                 </SearchOptionLi>
             </SearchOptionUl>

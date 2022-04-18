@@ -1,7 +1,12 @@
 import styled from 'styled-components';
+<<<<<<< HEAD
 import { ReactComponent as DeleteIcon } from '../asset/delete.svg';
 
 import { ReactComponent as LikeIcon } from '../asset/like.svg';
+=======
+import { ReactComponent as LikeIcon } from '../asset/like.svg';
+import { ReactComponent as DeleteIcon } from '../asset/delete.svg';
+>>>>>>> main
 
 const Modal = styled.div`
     position: fixed;
@@ -26,23 +31,34 @@ const ModalImg = styled.img`
 
 const DetailRow = styled.div`
     display: flex;
+<<<<<<< HEAD
 
+=======
+>>>>>>> main
     & > * {
         margin-right: 6px;
     }
 `;
 
 const ImageModal = ({ currentImageDetail, setCurrentImageDetail }) => {
+<<<<<<< HEAD
     const { largeImageURL, likes, views, tags } = currentImageDetail;
+=======
+    const { largeImageURL, tags, likes, views } = currentImageDetail;
+>>>>>>> main
     return (
         <Modal>
             <DeleteIcon
                 width="24px"
                 cursor="pointer"
                 fill="#FFFFFF"
+<<<<<<< HEAD
                 onClick={() => {
                     setCurrentImageDetail(null);
                 }}
+=======
+                onClick={() => setCurrentImageDetail(null)}
+>>>>>>> main
             />
             <ModalImg src={largeImageURL} />
             <p>{tags}</p>

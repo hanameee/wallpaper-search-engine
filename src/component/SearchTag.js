@@ -23,11 +23,19 @@ const TagLabel = styled.span`
     }
 `;
 
+<<<<<<< HEAD
 const SearchTag = ({ value, searchTag, deleteTag }) => {
     return (
         <Tag>
             <TagLabel onClick={searchTag}>{value}</TagLabel>
             <DeleteIcon width="12px" fill="red" onClick={deleteTag} />
+=======
+const SearchTag = ({ tag, searchTag, deleteTag }) => {
+    return (
+        <Tag onClick={searchTag}>
+            <TagLabel>{tag}</TagLabel>
+            <DeleteIcon width="12px" onClick={deleteTag} />
+>>>>>>> main
         </Tag>
     );
 };
