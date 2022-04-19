@@ -36,7 +36,11 @@ const Content = styled.div`
     padding: 120px 32px 16px 32px;
 `;
 
+<<<<<<< HEAD
 const Hero = ({ setQuery, setOrder, setOrientation, setPerPage }) => {
+=======
+const Hero = ({ setQuery, setOrder, setOrientation }) => {
+>>>>>>> infinite-scroll
     return (
         <Container>
             <Content>
@@ -48,7 +52,10 @@ const Hero = ({ setQuery, setOrder, setOrientation, setPerPage }) => {
                     setQuery={setQuery}
                     setOrder={setOrder}
                     setOrientation={setOrientation}
+<<<<<<< HEAD
                     setPerPage={setPerPage}
+=======
+>>>>>>> infinite-scroll
                 />
             </Content>
         </Container>

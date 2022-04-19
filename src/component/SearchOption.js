@@ -24,7 +24,11 @@ const SearchOptionLabel = styled.p`
     border-radius: 16px;
 `;
 
+<<<<<<< HEAD
 const SearchOption = ({ setOrder, setOrientation, setPerPage }) => {
+=======
+const SearchOption = ({ setOrder, setOrientation }) => {
+>>>>>>> infinite-scroll
     return (
         <SearchOptionContainer>
             <SearchOptionUl>
@@ -78,6 +82,7 @@ const SearchOption = ({ setOrder, setOrientation, setPerPage }) => {
                         <label htmlFor="vertical">세로</label>
                     </form>
                 </SearchOptionLi>
+<<<<<<< HEAD
                 <SearchOptionLi>
                     <SearchOptionLabel>페이지 당 갯수</SearchOptionLabel>
                     <form
@@ -108,6 +113,8 @@ const SearchOption = ({ setOrder, setOrientation, setPerPage }) => {
                         <label htmlFor="30">30</label>
                     </form>
                 </SearchOptionLi>
+=======
+>>>>>>> infinite-scroll
             </SearchOptionUl>
         </SearchOptionContainer>
     );

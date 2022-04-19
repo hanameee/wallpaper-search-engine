@@ -15,11 +15,15 @@ const Img = styled.img`
     border-radius: 4px;
 `;
 
-const ImageCard = ({ imgData, onClick }) => {
+const ImageCard = ({ imgData, onClick, setIsLoading, isLastItem }) => {
     const { webformatURL, id } = imgData;
     return (
         <Card onClick={onClick}>
-            <Img key={id} src={webformatURL}></Img>
+            <Img
+                key={id}
+                src={webformatURL}
+                onLoad={isLastItem ? () => setIsLoading(false) : null}
+            ></Img>
         </Card>
     );
 };

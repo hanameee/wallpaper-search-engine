@@ -47,7 +47,11 @@ const SearchOptionButton = styled.p`
     color: #5e5e5e;
 `;
 
+<<<<<<< HEAD
 const Search = ({ setQuery, setOrder, setOrientation, setPerPage }) => {
+=======
+const Search = ({ setQuery, setOrder, setOrientation }) => {
+>>>>>>> infinite-scroll
     const savedSearchTags = localStorage.getItem('searchTags');
     const initialSearchTags = savedSearchTags
         ? JSON.parse(savedSearchTags)
@@ -106,7 +110,10 @@ const Search = ({ setQuery, setOrder, setOrientation, setPerPage }) => {
                     <SearchOption
                         setOrder={setOrder}
                         setOrientation={setOrientation}
+<<<<<<< HEAD
                         setPerPage={setPerPage}
+=======
+>>>>>>> infinite-scroll
                     />
                 )}
             </SearchBoxContainer>
