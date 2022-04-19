@@ -30,7 +30,6 @@ function App() {
         : 0;
 
     const fetch = useCallback(async () => {
-        console.info('FETCH!', page);
         const fetchedData = await getWallPapers({
             q: query,
             orientation: orientation,
@@ -60,7 +59,6 @@ function App() {
         fetchData();
     }, [fetch, page]);
 
-    // page를 +1
     const onIntersect = useCallback(
         async ([entries], observer) => {
             if (!isLoading) {
@@ -73,7 +71,6 @@ function App() {
         [data, isLoading]
     );
 
-    // intersection observer 생성 및 등록
     useEffect(() => {
         if (page === numOfPages) {
             return;
