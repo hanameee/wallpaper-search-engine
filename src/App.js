@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import ToggleThemeButton from './component/ToggleThemeButton';
 import Hero from './component/Hero';
 import ResultContainer from './component/ResultContainer';
@@ -16,12 +16,13 @@ const Container = styled.div`
 `;
 
 function App() {
-    const [data, setData] = useState({});
+    const [data, setData] = useState({ totalHits: 0, hits: [] });
     const [query, setQuery] = useState('');
     const [order, setOrder] = useState('popular');
     const [orientation, setOrientation] = useState('all');
     const [page, setPage] = useState(1);
     const [perPage, setPerPage] = useState(20);
+    const target = useRef(null);
 
     const numOfPages = data.totalHits ? Math.ceil(data.totalHits / perPage) : 0;
 
@@ -34,10 +35,28 @@ function App() {
                 page: page,
                 per_page: perPage,
             });
-            setData(data);
+
+            setData((prevData) => ({
+                ...prevData,
+                hits: prevData.hits.concat(data.hits),
+            }));
         };
         fetch();
     }, [query, orientation, order, page, perPage]);
+
+    const onIntersect = ([entries]) => {
+        if (entries.isIntersecting) {
+            setPage((prev) => prev + 1);
+        }
+    };
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(onIntersect, {
+            threshold: 1,
+        });
+        observer.observe(target.current);
+        return () => observer.disconnect();
+    }, []);
 
     return (
         <>
@@ -49,7 +68,9 @@ function App() {
                     setPerPage={setPerPage}
                 />
                 <ResultContainer data={data} />
-                <EmptyResult isLoading={true} />
+                <div ref={target}>
+                    <EmptyResult isLoading={true} />
+                </div>
                 <Footer />
                 <ToggleThemeButton />
             </Container>
