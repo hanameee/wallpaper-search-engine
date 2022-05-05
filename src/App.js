@@ -1,17 +1,32 @@
 import styled from 'styled-components';
 import { useEffect, useState, useRef, useCallback } from 'react';
-import ToggleThemeButton from './component/ToggleThemeButton';
-import Hero from './component/Hero';
-import ResultContainer from './component/ResultContainer';
-import Footer from './component/Footer';
-import EmptyResult from './component/EmptyResult';
-import getWallPapers from './api/getWallPapers';
+import {
+    ToggleThemeButton,
+    Search,
+    Title,
+    ImageContainer,
+    Footer,
+    EmptyResult,
+} from './component';
+import getWallPapers from './api';
 import './App.css';
 
 const Container = styled.div`
     position: relative;
     background-color: var(--primary);
     min-height: 100vh;
+`;
+
+const Header = styled.div`
+    position: relative;
+    display: flex;
+    width: 100%;
+    background-color: var(--secondary);
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    padding: 120px 32px 16px 32px;
 `;
 
 const PER_PAGE = 20;
@@ -83,29 +98,30 @@ function App() {
     }, [isLoading, numOfPages, onIntersect, page]);
 
     return (
-        <>
-            <Container>
-                <Hero
+        <Container>
+            <Header>
+                <Title />
+                <Search
                     setQuery={setQuery}
                     setOrder={setOrder}
                     setOrientation={setOrientation}
                 />
-                <ResultContainer
-                    data={data}
-                    page={page}
-                    setPage={setPage}
-                    numOfPages={numOfPages}
-                    setIsLoading={setIsLoading}
-                />
-                <div ref={target}>
-                    {data.hits?.length && page !== numOfPages && isLoading && (
-                        <EmptyResult isLoading={true} />
-                    )}
-                </div>
-                <Footer />
-                <ToggleThemeButton />
-            </Container>
-        </>
+            </Header>
+            <ImageContainer
+                data={data}
+                page={page}
+                setPage={setPage}
+                numOfPages={numOfPages}
+                setIsLoading={setIsLoading}
+            />
+            <div ref={target}>
+                {page !== numOfPages && isLoading && (
+                    <EmptyResult isLoading={data.hits?.length} />
+                )}
+            </div>
+            <Footer />
+            <ToggleThemeButton />
+        </Container>
     );
 }
 
