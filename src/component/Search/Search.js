@@ -47,11 +47,12 @@ const SearchOptionButton = styled.p`
     color: #5e5e5e;
 `;
 
-const Search = ({ setQuery, setOrder, setOrientation }) => {
+const Search = ({ dispatch }) => {
     const savedSearchTags = localStorage.getItem('searchTags');
     const initialSearchTags = savedSearchTags
         ? JSON.parse(savedSearchTags)
         : [];
+
     const [searchOption, setSearchOption] = useState(false);
     const [searchTags, setSearchTags] = useState(initialSearchTags);
     const inputRef = useRef(null);
@@ -67,14 +68,14 @@ const Search = ({ setQuery, setOrder, setOrientation }) => {
     const onSearch = (e) => {
         if (e.key === 'Enter') {
             const currentValue = e.target.value;
-            setQuery(currentValue);
+            dispatch({ type: 'setQuery', currentValue });
             updateSearchInput('');
             setSearchTags((prev) => [...prev, currentValue]);
         }
     };
 
     const searchTag = (tag) => {
-        setQuery(tag);
+        dispatch({ type: 'setQuery', tag });
         updateSearchInput(tag);
     };
 
@@ -88,6 +89,7 @@ const Search = ({ setQuery, setOrder, setOrientation }) => {
         localStorage.setItem('searchTags', JSON.stringify(searchTags));
     }, [searchTags]);
 
+    // debounce 확인용
     const onChange = (e) => {
         console.info(e.target.value);
     };
@@ -107,12 +109,7 @@ const Search = ({ setQuery, setOrder, setOrientation }) => {
                         검색 옵션 {searchOption ? '닫기' : '열기'}
                     </SearchOptionButton>
                 </SearchInputContainer>
-                {searchOption && (
-                    <SearchOption
-                        setOrder={setOrder}
-                        setOrientation={setOrientation}
-                    />
-                )}
+                {searchOption && <SearchOption dispatch={dispatch} />}
             </SearchBoxContainer>
             <SearchTagContainer>
                 {searchTags.map((tag, idx) => (

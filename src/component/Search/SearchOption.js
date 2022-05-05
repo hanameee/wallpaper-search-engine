@@ -24,13 +24,21 @@ const SearchOptionLabel = styled.p`
     border-radius: 16px;
 `;
 
-const SearchOption = ({ setOrder, setOrientation }) => {
+const SearchOption = ({ dispatch }) => {
     return (
         <SearchOptionContainer>
             <SearchOptionUl>
                 <SearchOptionLi>
                     <SearchOptionLabel>정렬</SearchOptionLabel>
-                    <form id="order" onChange={(e) => setOrder(e.target.value)}>
+                    <form
+                        id="order"
+                        onChange={(e) =>
+                            dispatch({
+                                type: 'setOrder',
+                                payload: e.target.value,
+                            })
+                        }
+                    >
                         <input
                             type="radio"
                             name="order"
@@ -52,7 +60,12 @@ const SearchOption = ({ setOrder, setOrientation }) => {
                     <SearchOptionLabel>사진 방향</SearchOptionLabel>
                     <form
                         id="orientation"
-                        onChange={(e) => setOrientation(e.target.value)}
+                        onChange={(e) =>
+                            dispatch({
+                                type: 'setOrientation',
+                                payload: e.target.value,
+                            })
+                        }
                     >
                         <input
                             type="radio"

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useEffect, useState, useRef, useCallback } from 'react';
+import { useEffect, useState, useRef, useCallback, useReducer } from 'react';
 import {
     ToggleThemeButton,
     Search,
@@ -9,6 +9,7 @@ import {
     EmptyResult,
 } from './component';
 import getWallPapers from './api';
+import config from './config';
 import './App.css';
 
 const Container = styled.div`
@@ -29,50 +30,36 @@ const Header = styled.div`
     padding: 120px 32px 16px 32px;
 `;
 
-const PER_PAGE = 20;
-
 function App() {
     const [data, setData] = useState({});
-    const [query, setQuery] = useState('');
-    const [order, setOrder] = useState('popular');
-    const [orientation, setOrientation] = useState('all');
     const [page, setPage] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
     const target = useRef(null);
 
     const numOfPages = data.totalHits
-        ? Math.ceil(data.totalHits / PER_PAGE)
+        ? Math.ceil(data.totalHits / config.WALLPAPERS_PER_PAGE)
         : 0;
 
-    const fetch = useCallback(async () => {
-        const fetchedData = await getWallPapers({
-            q: query,
-            orientation: orientation,
-            order: order,
-            page: page,
-        });
-        return fetchedData;
-    }, [order, orientation, page, query]);
+    const initialOptions = {
+        query: '',
+        order: 'popular',
+        orientation: 'all',
+    };
 
-    useEffect(() => {
-        setPage(1);
-    }, [order, orientation, query]);
+    const reducer = (state, action) => {
+        switch (action.type) {
+            case 'setQuery':
+                return { ...state, query: action.payload };
+            case 'setOrder':
+                return { ...state, order: action.payload };
+            case 'setOrientation':
+                return { ...state, orientation: action.payload };
+            default:
+                return state;
+        }
+    };
 
-    useEffect(() => {
-        const fetchData = async () => {
-            const fetchedData = await fetch();
-            if (page === 1) {
-                setData(fetchedData);
-            } else {
-                setData((prev) => ({
-                    ...fetchedData,
-                    hits: prev.hits.concat(fetchedData.hits),
-                }));
-            }
-        };
-        setIsLoading(true);
-        fetchData();
-    }, [fetch, page]);
+    const [options, dispatch] = useReducer(reducer, initialOptions);
 
     const onIntersect = useCallback(
         async ([entries], observer) => {
@@ -86,39 +73,55 @@ function App() {
         [data, isLoading]
     );
 
+    const fetchWallPapers = useCallback(async () => {
+        const fetchedData = await getWallPapers({
+            ...options,
+            page: page,
+        });
+        return fetchedData;
+    }, [options, page]);
+
     useEffect(() => {
-        if (page === numOfPages) {
-            return;
-        }
+        const updateWallPapers = async () => {
+            const fetchedData = await fetchWallPapers();
+            if (page === 1) {
+                setData(fetchedData);
+            } else {
+                setData((prev) => ({
+                    ...fetchedData,
+                    hits: prev.hits.concat(fetchedData.hits),
+                }));
+            }
+        };
+        setIsLoading(true);
+        updateWallPapers();
+    }, [fetchWallPapers, page]);
+
+    useEffect(() => {
+        if (!target.current) return;
         const observer = new IntersectionObserver(onIntersect, {
             threshold: 0.5,
         });
         observer.observe(target.current);
         return () => observer.disconnect();
-    }, [isLoading, numOfPages, onIntersect, page]);
+    }, [onIntersect]);
+
+    useEffect(() => {
+        setPage(1);
+    }, [options]);
 
     return (
         <Container>
             <Header>
                 <Title />
-                <Search
-                    setQuery={setQuery}
-                    setOrder={setOrder}
-                    setOrientation={setOrientation}
-                />
+                <Search dispatch={dispatch} />
             </Header>
-            <ImageContainer
-                data={data}
-                page={page}
-                setPage={setPage}
-                numOfPages={numOfPages}
-                setIsLoading={setIsLoading}
-            />
-            <div ref={target}>
-                {page !== numOfPages && isLoading && (
-                    <EmptyResult isLoading={data.hits?.length} />
-                )}
-            </div>
+            <ImageContainer data={data} setIsLoading={setIsLoading} />
+            {page !== numOfPages && (
+                <div ref={target}>
+                    {isLoading && <EmptyResult isLoading={data.hits?.length} />}
+                </div>
+            )}
             <Footer />
             <ToggleThemeButton />
         </Container>

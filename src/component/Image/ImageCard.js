@@ -14,7 +14,6 @@ const Card = styled.div`
 const Img = styled.img`
     width: 100%;
     border-radius: 4px;
-    background-color: blue;
 `;
 
 const ImageCard = ({ imgData, onClick, setIsLoading, isLastItem }) => {

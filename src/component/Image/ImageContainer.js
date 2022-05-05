@@ -16,7 +16,7 @@ const ResultsWrapper = styled.div`
     width: 100%;
 `;
 
-const ResultContainer = ({ data, setIsLoading }) => {
+const ImageContainer = ({ data, setIsLoading }) => {
     const [currentImageDetail, setCurrentImageDetail] = useState(null);
     const totalDataLength = data.hits?.length;
     return (
@@ -44,4 +44,4 @@ const ResultContainer = ({ data, setIsLoading }) => {
     );
 };
 
-export default ResultContainer;
+export default ImageContainer;
