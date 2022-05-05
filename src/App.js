@@ -8,6 +8,7 @@ import Footer from './component/Footer';
 import getWallPapers from './api/getWallPapers';
 import './App.css';
 import EmptyResult from './component/EmptyResult';
+import { useCallback } from 'react';
 
 const Container = styled.div`
     position: relative;
@@ -26,23 +27,31 @@ function App() {
 
     const numOfPages = data.totalHits ? Math.ceil(data.totalHits / perPage) : 0;
 
+    const fetchWallPapers = useCallback(async () => {
+        const data = await getWallPapers({
+            q: query,
+            orientation: orientation,
+            order: order,
+            page: page,
+            per_page: perPage,
+        });
+        return data;
+    }, [order, orientation, page, perPage, query]);
+
     useEffect(() => {
         const fetch = async () => {
-            const data = await getWallPapers({
-                q: query,
-                orientation: orientation,
-                order: order,
-                page: page,
-                per_page: perPage,
-            });
-
-            setData((prevData) => ({
-                ...prevData,
-                hits: prevData.hits.concat(data.hits),
-            }));
+            const fetchedWallPapers = await fetchWallPapers();
+            if (page === 1) {
+                setData(fetchedWallPapers);
+            } else {
+                setData((prevData) => ({
+                    ...prevData,
+                    hits: prevData.hits.concat(fetchedWallPapers.hits),
+                }));
+            }
         };
         fetch();
-    }, [query, orientation, order, page, perPage]);
+    }, [fetchWallPapers, page]);
 
     const onIntersect = ([entries]) => {
         if (entries.isIntersecting) {
@@ -57,6 +66,10 @@ function App() {
         observer.observe(target.current);
         return () => observer.disconnect();
     }, []);
+
+    useEffect(() => {
+        setPage(1);
+    }, [order, orientation, perPage, query]);
 
     return (
         <>

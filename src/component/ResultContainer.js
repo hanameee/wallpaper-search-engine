@@ -3,8 +3,6 @@ import { useState } from 'react';
 
 import ImageCard from './ImageCard';
 import ImageModal from './ImageModal';
-import Pagination from './Pagination';
-import EmptyResult from './EmptyResult';
 
 const Container = styled.div`
     max-width: 1830px;
@@ -22,6 +20,7 @@ const ResultsWrapper = styled.div`
 
 const ResultContainer = ({ data }) => {
     const [currentImageDetail, setCurrentImageDetail] = useState(null);
+
     return (
         <Container>
             {/* ImgCard 클릭 시 해당 이미지의 정보로 ImageModal이 나타나야 합니다. */}
@@ -32,9 +31,9 @@ const ResultContainer = ({ data }) => {
                 />
             )}
             <ResultsWrapper>
-                {data.hits?.map((imgData) => (
+                {data.hits?.map((imgData, idx) => (
                     <ImageCard
-                        key={imgData.id}
+                        key={`${imgData.id}${idx}`}
                         imgData={imgData}
                         onClick={() => setCurrentImageDetail(imgData)}
                     />
