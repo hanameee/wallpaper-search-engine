@@ -81,9 +81,11 @@ function App() {
                     setPerPage={setPerPage}
                 />
                 <ResultContainer data={data} />
-                <div ref={target}>
-                    <EmptyResult isLoading={true} />
-                </div>
+                {numOfPages !== page && (
+                    <div ref={target}>
+                        <EmptyResult isLoading={data.totalHits} />
+                    </div>
+                )}
                 <Footer />
                 <ToggleThemeButton />
             </Container>
