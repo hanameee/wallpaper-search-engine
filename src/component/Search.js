@@ -47,11 +47,7 @@ const SearchOptionButton = styled.p`
     color: #5e5e5e;
 `;
 
-<<<<<<< HEAD
-const Search = ({ setQuery, setOrder, setOrientation, setPerPage }) => {
-=======
 const Search = ({ setQuery, setOrder, setOrientation }) => {
->>>>>>> infinite-scroll
     const savedSearchTags = localStorage.getItem('searchTags');
     const initialSearchTags = savedSearchTags
         ? JSON.parse(savedSearchTags)
@@ -59,6 +55,17 @@ const Search = ({ setQuery, setOrder, setOrientation }) => {
     const [searchOption, setSearchOption] = useState(false);
     const [searchTags, setSearchTags] = useState(initialSearchTags);
     const inputRef = useRef(null);
+
+    let debounceTimer;
+
+    const debounce = (callback, time, e) => {
+        if (debounceTimer) {
+            clearTimeout(debounceTimer);
+        }
+        debounceTimer = setTimeout(() => {
+            callback(e);
+        }, time);
+    };
 
     const updateSearchInput = (value) => {
         inputRef.current.value = value;
@@ -92,6 +99,10 @@ const Search = ({ setQuery, setOrder, setOrientation }) => {
         localStorage.setItem('searchTags', JSON.stringify(searchTags));
     }, [searchTags]);
 
+    const onChange = (e) => {
+        console.info(e.target.value);
+    };
+
     return (
         <>
             <SearchBoxContainer>
@@ -101,6 +112,7 @@ const Search = ({ setQuery, setOrder, setOrientation }) => {
                         ref={inputRef}
                         placeholder="검색어 입력 후 ENTER"
                         onKeyDown={onSearch}
+                        onChange={(e) => debounce(onChange, 300, e)}
                     />
                     <SearchOptionButton onClick={toggleSearchOption}>
                         검색 옵션 {searchOption ? '닫기' : '열기'}
@@ -110,10 +122,6 @@ const Search = ({ setQuery, setOrder, setOrientation }) => {
                     <SearchOption
                         setOrder={setOrder}
                         setOrientation={setOrientation}
-<<<<<<< HEAD
-                        setPerPage={setPerPage}
-=======
->>>>>>> infinite-scroll
                     />
                 )}
             </SearchBoxContainer>

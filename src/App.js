@@ -22,25 +22,6 @@ function App() {
     const [order, setOrder] = useState('popular');
     const [orientation, setOrientation] = useState('all');
     const [page, setPage] = useState(1);
-<<<<<<< HEAD
-    const [perPage, setPerPage] = useState(20);
-
-    const numOfPages = data.totalHits ? Math.ceil(data.totalHits / perPage) : 0;
-
-    useEffect(() => {
-        const fetch = async () => {
-            const data = await getWallPapers({
-                q: query,
-                orientation: orientation,
-                order: order,
-                page: page,
-                per_page: perPage,
-            });
-            setData(data);
-        };
-        fetch();
-    }, [query, orientation, order, page, perPage]);
-=======
     const [isLoading, setIsLoading] = useState(false);
     const target = useRef(null);
 
@@ -100,7 +81,6 @@ function App() {
         observer.observe(target.current);
         return () => observer.disconnect();
     }, [isLoading, numOfPages, onIntersect, page]);
->>>>>>> infinite-scroll
 
     return (
         <>
@@ -109,19 +89,12 @@ function App() {
                     setQuery={setQuery}
                     setOrder={setOrder}
                     setOrientation={setOrientation}
-<<<<<<< HEAD
-                    setPerPage={setPerPage}
-=======
->>>>>>> infinite-scroll
                 />
                 <ResultContainer
                     data={data}
                     page={page}
                     setPage={setPage}
                     numOfPages={numOfPages}
-<<<<<<< HEAD
-                />
-=======
                     setIsLoading={setIsLoading}
                 />
                 <div ref={target}>
@@ -129,7 +102,6 @@ function App() {
                         <EmptyResult isLoading={true} />
                     )}
                 </div>
->>>>>>> infinite-scroll
                 <Footer />
                 <ToggleThemeButton />
             </Container>

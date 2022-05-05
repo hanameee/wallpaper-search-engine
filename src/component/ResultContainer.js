@@ -20,14 +20,9 @@ const ResultsWrapper = styled.div`
     width: 100%;
 `;
 
-<<<<<<< HEAD
-const ResultContainer = ({ data, page, setPage, numOfPages }) => {
-    const [currentImageDetail, setCurrentImageDetail] = useState(null);
-=======
 const ResultContainer = ({ data, setIsLoading }) => {
     const [currentImageDetail, setCurrentImageDetail] = useState(null);
     const totalDataLength = data.hits?.length;
->>>>>>> infinite-scroll
     return (
         <Container>
             {/* ImgCard 클릭 시 해당 이미지의 정보로 ImageModal이 나타나야 합니다. */}
@@ -37,36 +32,22 @@ const ResultContainer = ({ data, setIsLoading }) => {
                     setCurrentImageDetail={setCurrentImageDetail}
                 />
             )}
-<<<<<<< HEAD
-            {data.hits?.length > 0 && (
-=======
             {/* {data.hits?.length > 0 && (
->>>>>>> infinite-scroll
                 <Pagination
                     page={page}
                     setPage={setPage}
                     numOfPages={numOfPages}
                 />
-<<<<<<< HEAD
-            )}
-            <ResultsWrapper>
-                {data.hits?.length > 0 ? (
-                    data.hits?.map((imgData) => (
-=======
             )} */}
             <ResultsWrapper>
                 {data.hits?.length > 0 ? (
                     data.hits?.map((imgData, idx) => (
->>>>>>> infinite-scroll
                         <ImageCard
                             key={imgData.id}
                             imgData={imgData}
                             onClick={() => setCurrentImageDetail(imgData)}
-<<<<<<< HEAD
-=======
                             setIsLoading={setIsLoading}
                             isLastItem={totalDataLength - 1 === idx}
->>>>>>> infinite-scroll
                         />
                     ))
                 ) : (
