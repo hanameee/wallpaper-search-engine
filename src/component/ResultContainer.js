@@ -20,7 +20,7 @@ const ResultsWrapper = styled.div`
     width: 100%;
 `;
 
-const ResultContainer = ({ data, page, setPage, numOfPages }) => {
+const ResultContainer = ({ data }) => {
     const [currentImageDetail, setCurrentImageDetail] = useState(null);
     return (
         <Container>
@@ -31,25 +31,14 @@ const ResultContainer = ({ data, page, setPage, numOfPages }) => {
                     setCurrentImageDetail={setCurrentImageDetail}
                 />
             )}
-            {data.hits?.length > 0 && (
-                <Pagination
-                    page={page}
-                    setPage={setPage}
-                    numOfPages={numOfPages}
-                />
-            )}
             <ResultsWrapper>
-                {data.hits?.length > 0 ? (
-                    data.hits?.map((imgData) => (
-                        <ImageCard
-                            key={imgData.id}
-                            imgData={imgData}
-                            onClick={() => setCurrentImageDetail(imgData)}
-                        />
-                    ))
-                ) : (
-                    <EmptyResult />
-                )}
+                {data.hits?.map((imgData) => (
+                    <ImageCard
+                        key={imgData.id}
+                        imgData={imgData}
+                        onClick={() => setCurrentImageDetail(imgData)}
+                    />
+                ))}
             </ResultsWrapper>
         </Container>
     );

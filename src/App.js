@@ -3,9 +3,11 @@ import { useEffect, useState } from 'react';
 import ToggleThemeButton from './component/ToggleThemeButton';
 import Hero from './component/Hero';
 import ResultContainer from './component/ResultContainer';
+
 import Footer from './component/Footer';
 import getWallPapers from './api/getWallPapers';
 import './App.css';
+import EmptyResult from './component/EmptyResult';
 
 const Container = styled.div`
     position: relative;
@@ -46,12 +48,8 @@ function App() {
                     setOrientation={setOrientation}
                     setPerPage={setPerPage}
                 />
-                <ResultContainer
-                    data={data}
-                    page={page}
-                    setPage={setPage}
-                    numOfPages={numOfPages}
-                />
+                <ResultContainer data={data} />
+                <EmptyResult isLoading={true} />
                 <Footer />
                 <ToggleThemeButton />
             </Container>
