@@ -1,14 +1,12 @@
 import styled from 'styled-components';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import ToggleThemeButton from './component/ToggleThemeButton';
 import Hero from './component/Hero';
 import ResultContainer from './component/ResultContainer';
-
 import Footer from './component/Footer';
 import getWallPapers from './api/getWallPapers';
 import './App.css';
 import EmptyResult from './component/EmptyResult';
-import { useCallback } from 'react';
 
 const Container = styled.div`
     position: relative;

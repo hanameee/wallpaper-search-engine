@@ -1,8 +1,7 @@
 import styled from 'styled-components';
-import { useState } from 'react';
-
+import React, { useState, Suspense } from 'react';
 import ImageCard from './ImageCard';
-import ImageModal from './ImageModal';
+const ImageModal = React.lazy(() => import('./ImageModal'));
 
 const Container = styled.div`
     max-width: 1830px;
@@ -24,12 +23,14 @@ const ResultContainer = ({ data }) => {
     return (
         <Container>
             {/* ImgCard 클릭 시 해당 이미지의 정보로 ImageModal이 나타나야 합니다. */}
-            {currentImageDetail && (
-                <ImageModal
-                    currentImageDetail={currentImageDetail}
-                    setCurrentImageDetail={setCurrentImageDetail}
-                />
-            )}
+            <Suspense fallback={<h1>로딩중</h1>}>
+                {currentImageDetail && (
+                    <ImageModal
+                        currentImageDetail={currentImageDetail}
+                        setCurrentImageDetail={setCurrentImageDetail}
+                    />
+                )}
+            </Suspense>
             <ResultsWrapper>
                 {data.hits?.map((imgData, idx) => (
                     <ImageCard
