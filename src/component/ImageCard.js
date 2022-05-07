@@ -19,7 +19,7 @@ const ImageCard = ({ imgData, onClick }) => {
     const { webformatURL, previewURL } = imgData;
     return (
         <Card onClick={onClick}>
-            <Img width={150} height={100} src={webformatURL}></Img>
+            <Img width={150} height={100} src={previewURL}></Img>
         </Card>
     );
 };
