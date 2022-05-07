@@ -84,6 +84,21 @@ const Search = ({ setQuery, setOrder, setOrientation, setPerPage }) => {
         setSearchTags(newSearchTags);
     };
 
+    let debounceTimer;
+
+    const debounce = (callback, time, e) => {
+        if (debounceTimer) {
+            clearTimeout(debounceTimer);
+        }
+        debounceTimer = setTimeout(() => {
+            callback(e);
+        }, time);
+    };
+
+    const onChange = (e) => {
+        console.info(e.target.value);
+    };
+
     useEffect(() => {
         localStorage.setItem('searchTags', JSON.stringify(searchTags));
     }, [searchTags]);
@@ -97,6 +112,7 @@ const Search = ({ setQuery, setOrder, setOrientation, setPerPage }) => {
                         ref={inputRef}
                         placeholder="검색어 입력 후 ENTER"
                         onKeyDown={onSearch}
+                        onChange={(e) => debounce(onChange, 300, e)}
                     />
                     <SearchOptionButton onClick={toggleSearchOption}>
                         검색 옵션 {searchOption ? '닫기' : '열기'}
