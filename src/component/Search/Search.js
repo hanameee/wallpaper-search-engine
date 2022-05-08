@@ -1,9 +1,8 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
-import { ReactComponent as SearchIcon } from '../asset/search.svg';
-import SearchTag from './SearchTag';
-import SearchOption from './SearchOption';
-import { useEffect } from 'react';
+import { SearchTag, SearchOption } from './';
+import debounce from '../../utils/debounce';
+import { ReactComponent as SearchIcon } from '../../asset/search.svg';
 
 const SearchTagContainer = styled.div`
     display: flex;
@@ -83,18 +82,6 @@ const Search = ({ setQuery, setOrder, setOrientation, setPerPage }) => {
         newSearchTags.splice(idx, 1);
         setSearchTags(newSearchTags);
     };
-
-    let debounceTimer;
-
-    const debounce = (callback, time, e) => {
-        if (debounceTimer) {
-            clearTimeout(debounceTimer);
-        }
-        debounceTimer = setTimeout(() => {
-            callback(e);
-        }, time);
-    };
-
     const onChange = (e) => {
         console.info(e.target.value);
     };

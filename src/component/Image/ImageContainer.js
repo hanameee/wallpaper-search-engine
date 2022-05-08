@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import React, { useState, Suspense } from 'react';
-import ImageCard from './ImageCard';
-const ImageModal = React.lazy(() => import('./ImageModal'));
+import { ImageCard } from '.';
+const { ImageModal } = React.lazy(() => import('.'));
 
 const Container = styled.div`
     max-width: 1830px;
@@ -17,7 +17,7 @@ const ResultsWrapper = styled.div`
     width: 100%;
 `;
 
-const ResultContainer = ({ data }) => {
+const ImageContainer = ({ data }) => {
     const [currentImageDetail, setCurrentImageDetail] = useState(null);
 
     return (
@@ -44,4 +44,4 @@ const ResultContainer = ({ data }) => {
     );
 };
 
-export default ResultContainer;
+export default ImageContainer;

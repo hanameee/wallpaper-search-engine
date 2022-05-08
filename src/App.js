@@ -1,17 +1,32 @@
 import styled from 'styled-components';
 import { useEffect, useState, useRef, useCallback } from 'react';
-import ToggleThemeButton from './component/ToggleThemeButton';
-import Hero from './component/Hero';
-import ResultContainer from './component/ResultContainer';
-import Footer from './component/Footer';
+import {
+    ToggleThemeButton,
+    Search,
+    Title,
+    ImageContainer,
+    Footer,
+    EmptyResult,
+} from './component';
 import getWallPapers from './api/getWallPapers';
 import './App.css';
-import EmptyResult from './component/EmptyResult';
 
 const Container = styled.div`
     position: relative;
     background-color: var(--primary);
     min-height: 100vh;
+`;
+
+const Header = styled.div`
+    position: relative;
+    display: flex;
+    width: 100%;
+    background-color: var(--secondary);
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    padding: 120px 32px 16px 32px;
 `;
 
 function App() {
@@ -70,24 +85,25 @@ function App() {
     }, [order, orientation, perPage, query]);
 
     return (
-        <>
-            <Container>
-                <Hero
+        <Container>
+            <Header>
+                <Title />
+                <Search
                     setQuery={setQuery}
                     setOrder={setOrder}
                     setOrientation={setOrientation}
                     setPerPage={setPerPage}
                 />
-                <ResultContainer data={data} />
-                {numOfPages !== page && (
-                    <div ref={target}>
-                        <EmptyResult isLoading={data.totalHits} />
-                    </div>
-                )}
-                <Footer />
-                <ToggleThemeButton />
-            </Container>
-        </>
+            </Header>
+            <ImageContainer data={data} />
+            {numOfPages !== page && (
+                <div ref={target}>
+                    <EmptyResult isLoading={data.totalHits} />
+                </div>
+            )}
+            <Footer />
+            <ToggleThemeButton />
+        </Container>
     );
 }
 
