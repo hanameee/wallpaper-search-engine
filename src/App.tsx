@@ -10,6 +10,7 @@ import {
 } from './component';
 import getWallPapers from './api/getWallPapers';
 import './App.css';
+import { IGetWallPapersResponse } from './types';
 
 const Container = styled.div`
     position: relative;
@@ -30,13 +31,17 @@ const Header = styled.div`
 `;
 
 function App() {
-    const [data, setData] = useState({ totalHits: 0, hits: [] });
+    const [data, setData] = useState<IGetWallPapersResponse>({
+        totalHits: 0,
+        hits: [],
+        total: 0,
+    });
     const [query, setQuery] = useState('');
     const [order, setOrder] = useState('popular');
     const [orientation, setOrientation] = useState('all');
     const [page, setPage] = useState(1);
     const [perPage, setPerPage] = useState(20);
-    const target = useRef(null);
+    const target = useRef<HTMLDivElement | null>(null);
 
     const numOfPages = data.totalHits ? Math.ceil(data.totalHits / perPage) : 0;
 
@@ -45,8 +50,8 @@ function App() {
             q: query,
             orientation: orientation,
             order: order,
-            page: page,
-            per_page: perPage,
+            page: page.toString(),
+            per_page: perPage.toString(),
         });
         return data;
     }, [order, orientation, page, perPage, query]);
@@ -66,13 +71,14 @@ function App() {
         fetch();
     }, [fetchWallPapers, page]);
 
-    const onIntersect = ([entries]) => {
+    const onIntersect: IntersectionObserverCallback = ([entries]) => {
         if (entries.isIntersecting) {
             setPage((prev) => prev + 1);
         }
     };
 
     useEffect(() => {
+        if (!target.current) return;
         const observer = new IntersectionObserver(onIntersect, {
             threshold: 1,
         });

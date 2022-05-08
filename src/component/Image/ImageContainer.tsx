@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 import React, { useState, Suspense } from 'react';
 import { ImageCard } from '.';
-const { ImageModal } = React.lazy(() => import('.'));
+import { IGetWallPapersResponse, IWallPaper } from '../../types';
+const ImageModal = React.lazy(() => import('./ImageModal'));
 
 const Container = styled.div`
     max-width: 1830px;
@@ -17,8 +18,13 @@ const ResultsWrapper = styled.div`
     width: 100%;
 `;
 
-const ImageContainer = ({ data }) => {
-    const [currentImageDetail, setCurrentImageDetail] = useState(null);
+interface IImageContainer {
+    data: IGetWallPapersResponse;
+}
+
+const ImageContainer = ({ data }: IImageContainer) => {
+    const [currentImageDetail, setCurrentImageDetail] =
+        useState<IWallPaper | null>(null);
 
     return (
         <Container>
